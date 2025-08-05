@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StripeMauiApp.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:FastEntry="clr-namespace:StripeMauiApp.Behaviors">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Grid">
+                <Setter Property="WidthRequest" Value="400" />
+                <Style.Triggers>
+                    <DataTrigger
+                        Binding="{Binding Path=Device.RuntimePlatform}"
+                        TargetType="Grid"
+                        Value="Android">
+                        <Setter Property="WidthRequest" Value="250" />
+                    </DataTrigger>
+                    <DataTrigger
+                        Binding="{Binding Path=Device.RuntimePlatform}"
+                        TargetType="Grid"
+                        Value="iOS">
+                        <Setter Property="WidthRequest" Value="180" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView Margin="20">
+        <Grid
+            ColumnDefinitions="*,*"
+            ColumnSpacing="5"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+            RowSpacing="15">
+            <Entry
+                Grid.ColumnSpan="2"
+                HorizontalOptions="Fill"
+                Keyboard="Numeric"
+                Placeholder="Amount to Pay"
+                Text="{Binding Amount}" />
+
+            <Label
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Stripe Payment Gateway"
+                TextColor="Black" />
+            <Label
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Text="Card Number"
+                TextColor="Black" />
+            <Entry
+                Grid.Row="3"
+                Grid.ColumnSpan="2"
+                Keyboard="Numeric"
+                Text="{Binding CardNumber}">
+                <Entry.Behaviors>
+                    <FastEntry:FastEntryBehaviour Mask="#### #### #### ####" MaxLength="19" />
+                </Entry.Behaviors>
+            </Entry>
+
+            <Label
+                Grid.Row="4"
+                Grid.ColumnSpan="2"
+                Text="Expiry"
+                TextColor="Black" />
+            <Entry
+                Grid.Row="5"
+                BackgroundColor="Transparent"
+                Keyboard="Numeric"
+                Placeholder="MM/YY"
+                Text="{Binding Expiry}">
+                <Entry.Behaviors>
+                    <FastEntry:FastEntryBehaviour Mask="##/##" MaxLength="5" />
+                </Entry.Behaviors>
+
+            </Entry>
+
+            <Label
+                Grid.Row="4"
+                Grid.Column="1"
+                Text="CVV"
+                TextColor="Black" />
+            <Entry
+                Grid.Row="5"
+                Grid.Column="1"
+                BackgroundColor="Transparent"
+                Keyboard="Numeric"
+                Text="{Binding Cvv}">
+                <Entry.Behaviors>
+                    <FastEntry:FastEntryBehaviour Mask="###" MaxLength="3" />
+                </Entry.Behaviors>
+
+            </Entry>
+
+            <Button
+                Grid.Row="6"
+                Grid.ColumnSpan="2"
+                Background="Black"
+                Command="{Binding PayCommand}"
+                HeightRequest="50"
+                HorizontalOptions="Fill"
+                Text="Pay"
+                TextColor="White" />
+        </Grid>
+    </ScrollView>
+</ContentPage>
